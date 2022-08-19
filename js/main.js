@@ -6,14 +6,23 @@ import ScoreView from "../js/score/scoreView.js";
 import Player from "../js/models/player.js";
 import ScoreController from "../js/score/scoreController.js";
 import GameController from "./game/gameController.js";
+import Game from "./models/game.js";
 
 // Custom components definition
 customElements.define('modal-component', Modal);
 customElements.define('button-component', Button);
 
-// Creating players
-const player = new Player('Jean', 0);
-const bot = new Player('Bot', 0);
+// Creating models
+const player = new Player('Jean', 0, 'human', '❌');
+const bot = new Player('Bot', 0, 'robot', '⭕');
+const game = new Game();
+
+game.setPlayers([
+  player,
+  bot
+]);
+
+game.setTurn(0);
 
 // Creating views and controllers
 const playerScoreView = new ScoreView();
@@ -24,10 +33,13 @@ const botScoreController = new ScoreController(botScoreView, bot);
 
 const gameView = new GameView('board');
 const gameController = new GameController(
-  gameView, 
+  gameView,
+  game,
   playerScoreController, 
   botScoreController
 );
+
+gameController.generateGrid(3);
 
 // Populate the DOM
 document.getElementById('main').appendChild(gameView.getView());

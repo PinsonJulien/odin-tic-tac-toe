@@ -93,6 +93,11 @@ main {
   justify-self: center;
 }
 
+#board > .cell {
+  display: flex;
+  user-select: none;
+}
+
 #board > .cell > * {
   margin: auto;
 }
