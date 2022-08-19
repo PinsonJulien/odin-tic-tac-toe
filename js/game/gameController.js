@@ -3,10 +3,12 @@ import Cell from "../../js/models/cell.js";
 export default class GameController {
   #gameView;
   #game;
+  #scoreControllers = [];
 
-  constructor(gameView, game) {
+  constructor(gameView, game, scoreControllers) {
     this.#gameView = gameView;
     this.#game = game;
+    this.#scoreControllers = scoreControllers;
 
     this.#gameView.setCellClickListener((cell) => this.playerTurn(cell));
   }
@@ -146,7 +148,7 @@ export default class GameController {
     if (!winner) {
 
     } else {
-      winner.setScore(winner.getScore() + 1);
+      this.getScoreController(winner).addScore(1);
     }
 
     console.log('game over.');
@@ -196,5 +198,9 @@ export default class GameController {
 
     this.#game.setGrid([...arr]);
     this.#gameView.generateGrid([...arr]);
+  }
+
+  getScoreController(player) {
+    return this.#scoreControllers.find(e => e.getPlayer() === player);
   }
 }

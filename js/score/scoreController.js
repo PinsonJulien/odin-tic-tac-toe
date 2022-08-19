@@ -9,4 +9,18 @@ export default class ScoreController {
     this.#view.setName(this.#player.getName());
     this.#view.setScore(this.#player.getScore());
   }
+
+  getPlayer() {
+    return this.#player;
+  }
+
+  getView() {
+    return this.#view;
+  }
+
+  addScore(score) {
+    const newScore = this.#player.getScore() + score;
+    this.#player.setScore(newScore);
+    this.#view.setScore(newScore);
+  }
 }
