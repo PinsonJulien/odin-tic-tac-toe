@@ -26,8 +26,8 @@ export default class Modal extends Component {
         }
       `,
       /*html*/`
-        <div class="modal">
-          <div class="modal-content">
+        <div class="modal" part="modal">
+          <div class="modal-content" part="container">
             <slot></slot>
           </div>
         </div>
