@@ -22,8 +22,6 @@ export default class ScoreView {
     return this.#root;
   }
 
-  resetView() {}
-
   setName(name) {
     this.#name.innerText = name;
   }

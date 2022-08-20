@@ -26,24 +26,25 @@ players.forEach((player) => {
   );
 });
 
-const game = new Game();
-
-game.setPlayers(players);
-game.setTurn(0);
-
 // Creating views and controllers
-const gameView = new GameView('board');
 const gameController = new GameController(
-  gameView,
-  game,
+  new GameView('board'),
+  new Game(),
   scoreControllers,
   new GameOverView('game-over-modal'),   
 );
 
+const game = gameController.getGameModel();
+game.setPlayers(players);
+game.setTurn(0);
+
 gameController.generateGrid(3);
 
 // Populate the DOM
-document.getElementById('main').appendChild(gameView.getView());
+document.getElementById('main').appendChild(
+  gameController.getGameView().getRoot()
+);
+
 document.getElementById('scores').append(
   ...scoreControllers.map((e) => e.getView().getRoot())
 );

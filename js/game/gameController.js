@@ -16,13 +16,16 @@ export default class GameController {
     this.#gameOverView.setOnButtonClickListener(() => this.newGame());
   }
 
+  // Game mechanic methods
+
+  // Reset the game
   newGame() {
     // The game must be over
     if (this.#game.getState()) return;
 
     this.#game.setState(true);
     this.#game.setTurn(0);
-    
+
     // Hide modal
     this.#gameOverView.setVisible(false);
 
@@ -34,7 +37,25 @@ export default class GameController {
       })
     });
   }
-  
+
+  // Shows the game over modal and prepare for the next game
+  gameOver(winner) {
+    this.#game.setState(false);
+    let victoryText;
+    // tie
+    if (!winner) {
+      victoryText = "It's a tie !"
+    } 
+    else {
+      victoryText = `${winner.getName()} won !`;
+      this.getScoreController(winner).addScore(1);
+    }
+
+    this.#gameOverView.setVictoryText(victoryText);
+    this.#gameOverView.setVisible(true);
+  }
+ 
+  // Ensure the player can play it's turn
   playerTurn(cell) {
     const player = this.getCurrentTurnPlayer();
 
@@ -47,6 +68,7 @@ export default class GameController {
     this.makeMove(cell, player);
   }
 
+  // Robot algorithm to pick a move
   robotTurn() {
     const botPlayer = this.getCurrentTurnPlayer();
     
@@ -57,6 +79,7 @@ export default class GameController {
     this.makeMove(cell, botPlayer);
   }
 
+  // Plays the selected move on the board and check if the game is over
   makeMove(cell, player) {
     // Set the owner and change the UI
     cell.setOwner(player);
@@ -77,6 +100,7 @@ export default class GameController {
     this.endTurn();
   }
 
+  // Checks every winning conditions, boolean return
   winCondition (cell, player) {
     const grid = this.#game.getGrid();
     const length = grid.length;
@@ -140,11 +164,15 @@ export default class GameController {
     return false;
   }
 
+  // Check if all cells are taken
   tieCondition() {
     // If a cell don't have an owner, return false.
     return this.getAvailableCells().length === 0;
   }
 
+  // Turn related methods
+
+  // Changes the current turn
   changeTurn() {
     const playerCount = this.#game.getPlayers().length;
     
@@ -156,6 +184,7 @@ export default class GameController {
     );
   }
 
+  // Whenever a player did a move, change the turn and check if the new player is a bot.
   endTurn() {
     this.changeTurn();
 
@@ -164,22 +193,7 @@ export default class GameController {
     if (this.isPlayerRobot(player)) this.robotTurn();
   }
 
-  gameOver(winner) {
-    this.#game.setState(false);
-    let victoryText;
-    // tie
-    if (!winner) {
-      victoryText = "It's a tie !"
-    } 
-    else {
-      victoryText = `${winner.getName()} won !`;
-      this.getScoreController(winner).addScore(1);
-    }
-
-    this.#gameOverView.setVictoryText(victoryText);
-    this.#gameOverView.setVisible(true);
-  }
-
+  // Utility methods
   getCurrentTurnPlayer() {
     return this.#game.getPlayers()[this.#game.getTurn()];
   }
@@ -226,11 +240,20 @@ export default class GameController {
     this.#gameView.generateGrid([...arr]);
   }
 
+  // Getters 
   getScoreController(player) {
     return this.#scoreControllers.find(e => e.getPlayer() === player);
   }
 
   getGameOverView() {
     return this.#gameOverView;
+  }
+
+  getGameModel() {
+    return this.#game;
+  }
+
+  getGameView() {
+    return this.#gameView;
   }
 }

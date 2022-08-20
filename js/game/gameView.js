@@ -1,19 +1,19 @@
 export default class GameView {
-  #view;
+  #root;
   #grid = [];
   #cellClickListener = (cell) => null;
 
   constructor(id) {
-    this.#view = document.createElement('div');
-    this.#view.setAttribute('id', id);
+    this.#root = document.createElement('div');
+    this.#root.setAttribute('id', id);
   }
 
   setCellClickListener(cellClickListener) {
     this.#cellClickListener = cellClickListener;
   }
 
-  getView() {
-    return this.#view;
+  getRoot() {
+    return this.#root;
   }
 
   updateCell(cell) {
@@ -24,8 +24,6 @@ export default class GameView {
     span.innerText = icon;
     element.replaceChildren(span);
   }
-
-  resetView() {}
 
   generateGrid(grid) {
     this.#grid = [];
@@ -46,6 +44,6 @@ export default class GameView {
       });
     });
 
-    this.#view.replaceChildren(...this.#grid.map(e => e.element));
+    this.#root.replaceChildren(...this.#grid.map(e => e.element));
   }
 }
