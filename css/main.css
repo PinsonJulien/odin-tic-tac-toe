@@ -137,19 +137,43 @@ main {
 
 /* Responsive grid */
 /* XS */
-@media only screen and (min-width:  0px) and (max-width: 640px) {}
+@media only screen and (min-width:  0px) and (max-width: 640px) {
+  #board {
+    width: 100%;
+  }
+}
 
 /* SM */
-@media only screen and (min-width:  640px) and (max-width: 768px) {}
+@media only screen and (min-width:  640px) and (max-width: 768px) {
+  #board {
+    width: 60%;
+  }
+}
 
 /* MD */
-@media only screen and (min-width:  768px) and (max-width: 1024px) {}
+@media only screen and (min-width:  768px) and (max-width: 1024px) {
+  #board {
+    width: 55%;
+  }
+}
 
 /* LG */
-@media only screen and (min-width:  1024px) and (max-width: 1280px) {}
+@media only screen and (min-width:  1024px) and (max-width: 1280px) {
+  #board {
+    width: 40%;
+  }
+}
 
 /* XL */
-@media only screen and (min-width:  1280px) and (max-width: 1536px) {}
+@media only screen and (min-width:  1280px) and (max-width: 1536px) {
+  #board {
+    width: 40%;
+  }
+}
 
 /* 2XL */
-@media only screen and (min-width:  1536px) {}
+@media only screen and (min-width:  1536px) {
+  #board {
+    width: 25%;
+  }
+}
