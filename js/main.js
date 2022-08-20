@@ -5,8 +5,9 @@ import GameView from "../js/game/gameView.js";
 import ScoreView from "../js/score/scoreView.js";
 import Player from "../js/models/player.js";
 import ScoreController from "../js/score/scoreController.js";
-import GameController from "./game/gameController.js";
-import Game from "./models/game.js";
+import GameController from "../js/game/gameController.js";
+import Game from "../js/models/game.js";
+import GameOverView from "../js/game/gameOverView.js";
 
 // Custom components definition
 customElements.define('modal-component', Modal);
@@ -35,7 +36,8 @@ const gameView = new GameView('board');
 const gameController = new GameController(
   gameView,
   game,
-  scoreControllers
+  scoreControllers,
+  new GameOverView('game-over-modal'),   
 );
 
 gameController.generateGrid(3);
@@ -44,4 +46,8 @@ gameController.generateGrid(3);
 document.getElementById('main').appendChild(gameView.getView());
 document.getElementById('scores').append(
   ...scoreControllers.map((e) => e.getView().getRoot())
+);
+
+document.body.appendChild(
+  gameController.getGameOverView().getRoot()
 );

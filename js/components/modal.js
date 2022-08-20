@@ -35,12 +35,6 @@ export default class Modal extends Component {
     );
     
     this.modal = this.shadowRoot.querySelector('.modal');
-    // Hide the modal when not clicking on content.
-    this.modal.addEventListener("click", (e) => {
-      if (e.target === this.modal) {
-        this.toggle(false);
-      }
-    });
   }
 
   toggle (active) {

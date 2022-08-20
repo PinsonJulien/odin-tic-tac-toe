@@ -2,7 +2,6 @@ export default class GameView {
   #view;
   #grid = [];
   #cellClickListener = (cell) => null;
-  #cellOn;
 
   constructor(id) {
     this.#view = document.createElement('div');
@@ -20,10 +19,10 @@ export default class GameView {
   updateCell(cell) {
     const id = this.#grid.findIndex(e => e.cell === cell);
     const element = this.#grid[id].element;
-    const icon = cell.getOwner().getIcon();
+    const icon = (cell.getOwner()) ? cell.getOwner().getIcon() : "";
     const span = document.createElement('span');
     span.innerText = icon;
-    element.append(span);
+    element.replaceChildren(span);
   }
 
   resetView() {}

@@ -4,13 +4,35 @@ export default class GameController {
   #gameView;
   #game;
   #scoreControllers = [];
+  #gameOverView;
 
-  constructor(gameView, game, scoreControllers) {
+  constructor(gameView, game, scoreControllers, gameOverView) {
     this.#gameView = gameView;
     this.#game = game;
     this.#scoreControllers = scoreControllers;
+    this.#gameOverView = gameOverView;
 
     this.#gameView.setCellClickListener((cell) => this.playerTurn(cell));
+    this.#gameOverView.setOnButtonClickListener(() => this.newGame());
+  }
+
+  newGame() {
+    // The game must be over
+    if (this.#game.getState()) return;
+
+    this.#game.setState(true);
+    this.#game.setTurn(0);
+    
+    // Hide modal
+    this.#gameOverView.setVisible(false);
+
+    // reset the grid
+    this.#game.getGrid().forEach((row) => {
+      row.forEach((cell) => {
+        cell.setOwner(null);
+        this.#gameView.updateCell(cell);
+      })
+    });
   }
   
   playerTurn(cell) {
@@ -46,7 +68,6 @@ export default class GameController {
       return;
     }
       
-
     // Tie if all cells are taken
     if (this.tieCondition()) {
       this.gameOver();
@@ -144,14 +165,19 @@ export default class GameController {
   }
 
   gameOver(winner) {
+    this.#game.setState(false);
+    let victoryText;
     // tie
     if (!winner) {
-
-    } else {
+      victoryText = "It's a tie !"
+    } 
+    else {
+      victoryText = `${winner.getName()} won !`;
       this.getScoreController(winner).addScore(1);
     }
 
-    console.log('game over.');
+    this.#gameOverView.setVictoryText(victoryText);
+    this.#gameOverView.setVisible(true);
   }
 
   getCurrentTurnPlayer() {
@@ -202,5 +228,9 @@ export default class GameController {
 
   getScoreController(player) {
     return this.#scoreControllers.find(e => e.getPlayer() === player);
+  }
+
+  getGameOverView() {
+    return this.#gameOverView;
   }
 }

@@ -1,7 +1,7 @@
 import Component from "../components/component.js";
 
 export default class Button extends Component {
-  onClick = (e) => null;
+  #onClick = (e) => null;
   
   constructor() {
     super (
@@ -25,10 +25,10 @@ export default class Button extends Component {
         </button>
       `
     );
-    this.shadowRoot.addEventListener("click", (e) => this.onClick(e));
+    this.shadowRoot.addEventListener("click", (e) => this.#onClick(e));
   }
 
-  set onClick (onClick) {
-    this.onClick = onClick;
+  setOnClick(onClick) {
+    this.#onClick = onClick;
   }
 }

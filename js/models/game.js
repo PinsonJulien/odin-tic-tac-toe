@@ -2,6 +2,7 @@ export default class Game {
   #players = [];
   #turn;
   #grid = [[]];
+  #state = true; // true : the game is on
 
   constructor() {}
 
@@ -27,5 +28,13 @@ export default class Game {
 
   getGrid() {
     return this.#grid;
+  }
+
+  setState(state) {
+    this.#state = state;
+  }
+
+  getState() {
+    return this.#state;
   }
 }
