@@ -8,6 +8,7 @@ export default class ScoreController {
 
     this.#view.setName(this.#player.getName());
     this.#view.setScore(this.#player.getScore());
+    this.#view.setIcon(this.#player.getIcon());
   }
 
   getPlayer() {
