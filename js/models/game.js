@@ -1,6 +1,6 @@
 export default class Game {
   #players = [];
-  #turn;
+  #turn = 0;
   #grid = [[]];
   #state = true; // true : the game is on
 

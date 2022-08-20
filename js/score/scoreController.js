@@ -24,4 +24,9 @@ export default class ScoreController {
     this.#player.setScore(newScore);
     this.#view.setScore(newScore);
   }
+
+  // Add or remove borders to the player that's currently playing
+  setSelected (turn) {
+    this.#view.setSelected(turn);
+  }
 }

@@ -33,4 +33,10 @@ export default class ScoreView {
   setIcon(icon) {
     this.#icon.innerText = icon;
   }
+
+  setSelected(selected) {
+    const className = "selected";
+    if (selected) this.#root.classList.add(className);
+    else this.#root.classList.remove(className);
+  }
 }

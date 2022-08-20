@@ -26,17 +26,17 @@ players.forEach((player) => {
   );
 });
 
+const game = new Game();
+game.setPlayers(players);
+game.setTurn(0);
+
 // Creating views and controllers
 const gameController = new GameController(
   new GameView('board'),
-  new Game(),
+  game,
   scoreControllers,
   new GameOverView('game-over-modal'),   
 );
-
-const game = gameController.getGameModel();
-game.setPlayers(players);
-game.setTurn(0);
 
 gameController.generateGrid(3);
 

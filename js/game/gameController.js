@@ -14,6 +14,8 @@ export default class GameController {
 
     this.#gameView.setCellClickListener((cell) => this.playerTurn(cell));
     this.#gameOverView.setOnButtonClickListener(() => this.newGame());
+
+    this.setTurn(this.#game.getTurn());
   }
 
   // Game mechanic methods
@@ -24,7 +26,7 @@ export default class GameController {
     if (this.#game.getState()) return;
 
     this.#game.setState(true);
-    this.#game.setTurn(0);
+    this.setTurn(0);
 
     // Hide modal
     this.#gameOverView.setVisible(false);
@@ -172,12 +174,26 @@ export default class GameController {
 
   // Turn related methods
 
+  setTurn(turn) {
+    const setPlayerSelection = (player, selected) => {
+      this.getScoreController(player).setSelected(selected);
+    };
+
+    // removes the border from last player
+    setPlayerSelection(this.getCurrentTurnPlayer(), false);
+
+    this.#game.setTurn(turn);
+
+    // show the ones of the new player
+    setPlayerSelection(this.getCurrentTurnPlayer(), true);
+  }
+
   // Changes the current turn
   changeTurn() {
     const playerCount = this.#game.getPlayers().length;
     
     const currentTurn = this.#game.getTurn() + 1;
-    this.#game.setTurn(
+    this.setTurn(
       (currentTurn === playerCount)
       ? 0
       : currentTurn
@@ -186,10 +202,12 @@ export default class GameController {
 
   // Whenever a player did a move, change the turn and check if the new player is a bot.
   endTurn() {
+    // Skip the turn of last player
     this.changeTurn();
 
     // If the current player is a robot, let the algorithm do a move.
     const player = this.getCurrentTurnPlayer();
+    this.getScoreController(player).setSelected(true);
     if (this.isPlayerRobot(player)) this.robotTurn();
   }
 
