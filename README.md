@@ -3,8 +3,11 @@ The 9th [project](https://www.theodinproject.com/lessons/node-path-javascript-ti
 
 See the result [here](https://pinsonjulien.github.io/odin-tic-tac-toe/)
 
+
 ## Known issues
 Currently none
 
 ## Possible improvements
-Currently none
+- Currently the bot plays randomly, it would be better to use an algorithm, either:
+  - Minimax
+  - Alpha-Beta pruning
